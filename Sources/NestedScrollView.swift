@@ -292,11 +292,23 @@ extension NestedScrollView {
         self.setNeedsLayout()
     }
     
+    private func assertScrollView(_ scrollView: UIScrollView) {
+        let message = "estimated特性会导致contenSize计算不准确, 产生跳动的问题"
+        if let tableView = scrollView as? UITableView {
+            assert(tableView.estimatedRowHeight == 0 && tableView.estimatedSectionHeaderHeight == 0 && tableView.estimatedSectionFooterHeight == 0, message)
+        }
+        if let collectionView = scrollView as? UICollectionView, let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            assert(flowLayout.estimatedItemSize == CGSize.zero, message)
+        }
+    }
+    
     private func updateScrollSettings() {
         if !self.showsVerticalScrollIndicator {
             self.showsVerticalScrollIndicator = true
         }
         if let headerScrollView = self.headerScrollView {
+            self.assertScrollView(headerScrollView)
+            
             if headerScrollView.showsVerticalScrollIndicator {
                 headerScrollView.showsVerticalScrollIndicator = false
             }
@@ -308,6 +320,8 @@ extension NestedScrollView {
             }
         }
         if let contentScrollView = self.contentScrollView {
+            self.assertScrollView(contentScrollView)
+            
             if contentScrollView.showsVerticalScrollIndicator {
                 contentScrollView.showsVerticalScrollIndicator = false
             }
