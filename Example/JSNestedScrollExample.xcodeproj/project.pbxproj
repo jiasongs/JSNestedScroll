@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		278DC77BB4C371BE60F98BA7 /* Pods_JSNestedScrollExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE61C12FE61A24ED41F34BE /* Pods_JSNestedScrollExample.framework */; };
+		7A5CB173291897F6003EEF21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A5CB172291897F6003EEF21 /* Assets.xcassets */; };
+		7A5CB176291897F6003EEF21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A5CB174291897F6003EEF21 /* LaunchScreen.storyboard */; };
+		7AFC10AC2918B7C800726999 /* NestedScrollFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A42918B7C800726999 /* NestedScrollFloatingView.swift */; };
+		7AFC10AD2918B7C800726999 /* NestedScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A52918B7C800726999 /* NestedScrollViewController.swift */; };
+		7AFC10AE2918B7C800726999 /* NestedScrollListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A62918B7C800726999 /* NestedScrollListView.swift */; };
+		7AFC10AF2918B7C800726999 /* NestedScrollSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A72918B7C800726999 /* NestedScrollSupplementaryView.swift */; };
+		7AFC10B02918B7C800726999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10AA2918B7C800726999 /* AppDelegate.swift */; };
+		7AFC10B12918B7C800726999 /* QMUIConfigurationTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10AB2918B7C800726999 /* QMUIConfigurationTemplate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		282D5557AC139407453D9B8D /* Pods-JSNestedScrollExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSNestedScrollExample.release.xcconfig"; path = "Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample.release.xcconfig"; sourceTree = "<group>"; };
+		2AE61C12FE61A24ED41F34BE /* Pods_JSNestedScrollExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JSNestedScrollExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A5CB166291897F5003EEF21 /* JSNestedScrollExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSNestedScrollExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A5CB172291897F6003EEF21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7A5CB175291897F6003EEF21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7A5CB177291897F6003EEF21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7AFC10A42918B7C800726999 /* NestedScrollFloatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollFloatingView.swift; sourceTree = "<group>"; };
+		7AFC10A52918B7C800726999 /* NestedScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollViewController.swift; sourceTree = "<group>"; };
+		7AFC10A62918B7C800726999 /* NestedScrollListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollListView.swift; sourceTree = "<group>"; };
+		7AFC10A72918B7C800726999 /* NestedScrollSupplementaryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollSupplementaryView.swift; sourceTree = "<group>"; };
+		7AFC10A82918B7C800726999 /* JSNestedScrollExample-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JSNestedScrollExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		7AFC10A92918B7C800726999 /* QMUIConfigurationTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QMUIConfigurationTemplate.h; sourceTree = "<group>"; };
+		7AFC10AA2918B7C800726999 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7AFC10AB2918B7C800726999 /* QMUIConfigurationTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QMUIConfigurationTemplate.m; sourceTree = "<group>"; };
+		91D948E5876881A3A787E643 /* Pods-JSNestedScrollExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JSNestedScrollExample.debug.xcconfig"; path = "Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7A5CB163291897F5003EEF21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				278DC77BB4C371BE60F98BA7 /* Pods_JSNestedScrollExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7A5CB15D291897F5003EEF21 = {
+			isa = PBXGroup;
+			children = (
+				7A5CB168291897F5003EEF21 /* JSNestedScrollExample */,
+				7A5CB167291897F5003EEF21 /* Products */,
+				A09F8D7F1B629985AF8BFB03 /* Pods */,
+				FFED59AB6BF762149A432340 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7A5CB167291897F5003EEF21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7A5CB166291897F5003EEF21 /* JSNestedScrollExample.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7A5CB168291897F5003EEF21 /* JSNestedScrollExample */ = {
+			isa = PBXGroup;
+			children = (
+				7AFC10A22918B7C800726999 /* Source */,
+				7A5CB172291897F6003EEF21 /* Assets.xcassets */,
+				7A5CB174291897F6003EEF21 /* LaunchScreen.storyboard */,
+				7A5CB177291897F6003EEF21 /* Info.plist */,
+			);
+			path = JSNestedScrollExample;
+			sourceTree = "<group>";
+		};
+		7AFC10A22918B7C800726999 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				7AFC10B22918B7F900726999 /* App */,
+				7AFC10B32918B80400726999 /* Common */,
+				7AFC10A32918B7C800726999 /* NestedScroll */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		7AFC10A32918B7C800726999 /* NestedScroll */ = {
+			isa = PBXGroup;
+			children = (
+				7AFC10A42918B7C800726999 /* NestedScrollFloatingView.swift */,
+				7AFC10A62918B7C800726999 /* NestedScrollListView.swift */,
+				7AFC10A72918B7C800726999 /* NestedScrollSupplementaryView.swift */,
+				7AFC10A52918B7C800726999 /* NestedScrollViewController.swift */,
+			);
+			path = NestedScroll;
+			sourceTree = "<group>";
+		};
+		7AFC10B22918B7F900726999 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				7AFC10AA2918B7C800726999 /* AppDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		7AFC10B32918B80400726999 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				7AFC10A92918B7C800726999 /* QMUIConfigurationTemplate.h */,
+				7AFC10AB2918B7C800726999 /* QMUIConfigurationTemplate.m */,
+				7AFC10A82918B7C800726999 /* JSNestedScrollExample-Bridging-Header.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		A09F8D7F1B629985AF8BFB03 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				91D948E5876881A3A787E643 /* Pods-JSNestedScrollExample.debug.xcconfig */,
+				282D5557AC139407453D9B8D /* Pods-JSNestedScrollExample.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FFED59AB6BF762149A432340 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2AE61C12FE61A24ED41F34BE /* Pods_JSNestedScrollExample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7A5CB165291897F5003EEF21 /* JSNestedScrollExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A5CB17A291897F6003EEF21 /* Build configuration list for PBXNativeTarget "JSNestedScrollExample" */;
+			buildPhases = (
+				E9BB391DDD4BC5A9ED8E88B1 /* [CP] Check Pods Manifest.lock */,
+				7A5CB162291897F5003EEF21 /* Sources */,
+				7A5CB163291897F5003EEF21 /* Frameworks */,
+				7A5CB164291897F5003EEF21 /* Resources */,
+				59FD4F00B6B6AA99C9371702 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSNestedScrollExample;
+			productName = JSNestedScrollExample;
+			productReference = 7A5CB166291897F5003EEF21 /* JSNestedScrollExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7A5CB15E291897F5003EEF21 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					7A5CB165291897F5003EEF21 = {
+						CreatedOnToolsVersion = 14.1;
+						LastSwiftMigration = 1410;
+					};
+				};
+			};
+			buildConfigurationList = 7A5CB161291897F5003EEF21 /* Build configuration list for PBXProject "JSNestedScrollExample" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7A5CB15D291897F5003EEF21;
+			productRefGroup = 7A5CB167291897F5003EEF21 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7A5CB165291897F5003EEF21 /* JSNestedScrollExample */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7A5CB164291897F5003EEF21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A5CB176291897F6003EEF21 /* LaunchScreen.storyboard in Resources */,
+				7A5CB173291897F6003EEF21 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		59FD4F00B6B6AA99C9371702 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9BB391DDD4BC5A9ED8E88B1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JSNestedScrollExample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A5CB162291897F5003EEF21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7AFC10B02918B7C800726999 /* AppDelegate.swift in Sources */,
+				7AFC10AD2918B7C800726999 /* NestedScrollViewController.swift in Sources */,
+				7AFC10B12918B7C800726999 /* QMUIConfigurationTemplate.m in Sources */,
+				7AFC10AC2918B7C800726999 /* NestedScrollFloatingView.swift in Sources */,
+				7AFC10AF2918B7C800726999 /* NestedScrollSupplementaryView.swift in Sources */,
+				7AFC10AE2918B7C800726999 /* NestedScrollListView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7A5CB174291897F6003EEF21 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7A5CB175291897F6003EEF21 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7A5CB178291897F6003EEF21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7A5CB179291897F6003EEF21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7A5CB17B291897F6003EEF21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91D948E5876881A3A787E643 /* Pods-JSNestedScrollExample.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KJ6AEY5JEH;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JSNestedScrollExample/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiasong.JSNestedScrollExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "JSNestedScrollExample/Source/Common/JSNestedScrollExample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		7A5CB17C291897F6003EEF21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 282D5557AC139407453D9B8D /* Pods-JSNestedScrollExample.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KJ6AEY5JEH;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = JSNestedScrollExample/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jiasong.JSNestedScrollExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "JSNestedScrollExample/Source/Common/JSNestedScrollExample-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7A5CB161291897F5003EEF21 /* Build configuration list for PBXProject "JSNestedScrollExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A5CB178291897F6003EEF21 /* Debug */,
+				7A5CB179291897F6003EEF21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7A5CB17A291897F6003EEF21 /* Build configuration list for PBXNativeTarget "JSNestedScrollExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A5CB17B291897F6003EEF21 /* Debug */,
+				7A5CB17C291897F6003EEF21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7A5CB15E291897F5003EEF21 /* Project object */;
+}
