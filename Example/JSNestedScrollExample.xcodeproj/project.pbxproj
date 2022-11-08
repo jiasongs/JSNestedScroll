@@ -10,6 +10,8 @@
 		278DC77BB4C371BE60F98BA7 /* Pods_JSNestedScrollExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE61C12FE61A24ED41F34BE /* Pods_JSNestedScrollExample.framework */; };
 		7A5CB173291897F6003EEF21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A5CB172291897F6003EEF21 /* Assets.xcassets */; };
 		7A5CB176291897F6003EEF21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A5CB174291897F6003EEF21 /* LaunchScreen.storyboard */; };
+		7A9263222919DEDE00A1EBC4 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7A9263212919DEDE00A1EBC4 /* video.mp4 */; };
+		7A9263242919E1A500A1EBC4 /* video.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7A9263232919E1A500A1EBC4 /* video.gif */; };
 		7AFC10AC2918B7C800726999 /* NestedScrollFloatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A42918B7C800726999 /* NestedScrollFloatingView.swift */; };
 		7AFC10AD2918B7C800726999 /* NestedScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A52918B7C800726999 /* NestedScrollViewController.swift */; };
 		7AFC10AE2918B7C800726999 /* NestedScrollListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFC10A62918B7C800726999 /* NestedScrollListView.swift */; };
@@ -25,6 +27,8 @@
 		7A5CB172291897F6003EEF21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7A5CB175291897F6003EEF21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A5CB177291897F6003EEF21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7A9263212919DEDE00A1EBC4 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
+		7A9263232919E1A500A1EBC4 /* video.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = video.gif; sourceTree = "<group>"; };
 		7AFC10A42918B7C800726999 /* NestedScrollFloatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollFloatingView.swift; sourceTree = "<group>"; };
 		7AFC10A52918B7C800726999 /* NestedScrollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollViewController.swift; sourceTree = "<group>"; };
 		7AFC10A62918B7C800726999 /* NestedScrollListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NestedScrollListView.swift; sourceTree = "<group>"; };
@@ -77,12 +81,22 @@
 			path = JSNestedScrollExample;
 			sourceTree = "<group>";
 		};
+		7A9263202919DECA00A1EBC4 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				7A9263232919E1A500A1EBC4 /* video.gif */,
+				7A9263212919DEDE00A1EBC4 /* video.mp4 */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		7AFC10A22918B7C800726999 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				7AFC10B22918B7F900726999 /* App */,
 				7AFC10B32918B80400726999 /* Common */,
 				7AFC10A32918B7C800726999 /* NestedScroll */,
+				7A9263202919DECA00A1EBC4 /* Resource */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -194,7 +208,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A9263242919E1A500A1EBC4 /* video.gif in Resources */,
 				7A5CB176291897F6003EEF21 /* LaunchScreen.storyboard in Resources */,
+				7A9263222919DEDE00A1EBC4 /* video.mp4 in Resources */,
 				7A5CB173291897F6003EEF21 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

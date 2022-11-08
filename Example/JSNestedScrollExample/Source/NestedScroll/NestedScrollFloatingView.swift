@@ -15,6 +15,7 @@ class NestedScrollFloatingView: UIView {
     lazy var label: QMUILabel = {
         return QMUILabel().then {
             $0.text = "floating"
+            $0.textColor = .black
             $0.textAlignment = .center
         }
     }()

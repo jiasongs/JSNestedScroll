@@ -15,6 +15,7 @@ class NestedScrollSupplementaryView: UIView {
     lazy var label: QMUILabel = {
         return QMUILabel().then {
             $0.text = "middle"
+            $0.textColor = .black
             $0.textAlignment = .center
         }
     }()

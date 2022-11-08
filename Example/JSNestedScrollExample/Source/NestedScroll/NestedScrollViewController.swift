@@ -98,6 +98,14 @@ class NestedScrollViewController: QMUICommonViewController {
 
 extension NestedScrollViewController {
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if #available(iOS 13.0, *) {
+            return .darkContent
+        } else {
+            return .default
+        }
+    }
+    
     override func preferredNavigationBarHidden() -> Bool {
         return false
     }

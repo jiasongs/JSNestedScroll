@@ -55,6 +55,8 @@ class NestedScrollListView: UIView, QMUITableViewDataSource, QMUITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(QMUITableViewCell.self)", for: indexPath)
         cell.textLabel?.text = "\(self.textPrefix) - \(indexPath.row)"
+        cell.textLabel?.textColor = .black
+        cell.backgroundColor = .clear
         cell.selectionStyle = .none
         return cell
     }
