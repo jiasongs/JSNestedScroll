@@ -431,27 +431,25 @@ extension NestedScrollView {
                         contentMinimumContentOffset.y -= prefixContentHeight
                         self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
                     }
+                } else if contentOffsetY < self.js_maximumContentOffset.y {
+                    /// container
+                    self.updateView(containerView, translationY: maximumOffsetY + self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
+                    
+                    /// content
+                    if let contentScrollView = self.contentScrollView {
+                        self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
+                    }
                 } else {
-                    if contentOffsetY < self.js_maximumContentOffset.y {
-                        /// container
-                        self.updateView(containerView, translationY: maximumOffsetY + self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
-                        
-                        /// content
-                        if let contentScrollView = self.contentScrollView {
-                            self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
-                        }
-                    } else {
-                        /// container
-                        self.updateView(containerView, translationY: maximumOffsetY + contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
-                        
-                        /// content
-                        if let contentScrollView = self.contentScrollView {
-                            var contentMinimumContentOffset = contentScrollView.js_minimumContentOffset
-                            contentMinimumContentOffset.y += contentOffsetY
-                            contentMinimumContentOffset.y -= prefixContentHeight
-                            contentMinimumContentOffset.y -= self.adjustedContentInset.bottom
-                            self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
-                        }
+                    /// container
+                    self.updateView(containerView, translationY: maximumOffsetY + contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
+                    
+                    /// content
+                    if let contentScrollView = self.contentScrollView {
+                        var contentMinimumContentOffset = contentScrollView.js_minimumContentOffset
+                        contentMinimumContentOffset.y += contentOffsetY
+                        contentMinimumContentOffset.y -= prefixContentHeight
+                        contentMinimumContentOffset.y -= self.adjustedContentInset.bottom
+                        self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
                     }
                 }
             }
@@ -480,27 +478,25 @@ extension NestedScrollView {
                     contentMinimumContentOffset.y -= prefixContentHeight
                     self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
                 }
+            } else if contentOffsetY < self.js_maximumContentOffset.y {
+                /// container
+                self.updateView(containerView, translationY: self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
+                
+                /// content
+                if let contentScrollView = self.contentScrollView {
+                    self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
+                }
             } else {
-                if contentOffsetY < self.js_maximumContentOffset.y {
-                    /// container
-                    self.updateView(containerView, translationY: self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
-                    
-                    /// content
-                    if let contentScrollView = self.contentScrollView {
-                        self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
-                    }
-                } else {
-                    /// container
-                    self.updateView(containerView, translationY: contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
-                    
-                    /// content
-                    if let contentScrollView = self.contentScrollView {
-                        var contentMinimumContentOffset = contentScrollView.js_minimumContentOffset
-                        contentMinimumContentOffset.y += contentOffsetY
-                        contentMinimumContentOffset.y -= prefixContentHeight
-                        contentMinimumContentOffset.y -= self.adjustedContentInset.bottom
-                        self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
-                    }
+                /// container
+                self.updateView(containerView, translationY: contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
+                
+                /// content
+                if let contentScrollView = self.contentScrollView {
+                    var contentMinimumContentOffset = contentScrollView.js_minimumContentOffset
+                    contentMinimumContentOffset.y += contentOffsetY
+                    contentMinimumContentOffset.y -= prefixContentHeight
+                    contentMinimumContentOffset.y -= self.adjustedContentInset.bottom
+                    self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
                 }
             }
         }
