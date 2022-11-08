@@ -11,7 +11,8 @@ Pod::Spec.new do |s|
   s.static_framework      = true
   s.requires_arc          = true
   s.frameworks            = "UIKit"
-  s.source_files          = "Sources"
 
   s.dependency "JSCoreKit", "~> 0.2.6"
+
+  s.source_files          = "Sources/**/*.{swift,h,m}"
 end

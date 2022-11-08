@@ -1,9 +1,14 @@
 # JSNestedScrollView
-嵌套滚动组件, 未发布
+嵌套滚动组件
 
 ## Cocoapods
-`cd Example && pod install`
+
+`pod "JSNestedScroll"`
 
 ## 效果
 
 ![](./Example/JSNestedScrollExample/Source/Resource/video.gif)
+
+## Example
+
+`cd Example && pod install`
