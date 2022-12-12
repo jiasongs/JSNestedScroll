@@ -443,11 +443,11 @@ extension NestedScrollView {
                     
                     /// content
                     if let contentScrollView = self.contentScrollView {
-                        var contentContentOffset = contentScrollView.js_minimumContentOffset
-                        contentContentOffset.y += contentOffsetY
-                        contentContentOffset.y -= prefixContentHeight
-                        contentContentOffset.y -= self.adjustedContentInset.bottom
-                        self.updateScrollView(contentScrollView, contentOffset: contentContentOffset)
+                        var contentScrollOffset = contentScrollView.js_minimumContentOffset
+                        contentScrollOffset.y += contentOffsetY
+                        contentScrollOffset.y -= prefixContentHeight
+                        contentScrollOffset.y -= self.adjustedContentInset.bottom
+                        self.updateScrollView(contentScrollView, contentOffset: contentScrollOffset)
                     }
                 }
             }
