@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license               = "MIT"
   s.author                = { "ruanmei" => "jiasong@ruanmei.com" }
   s.source                = { :git => "https://github.com/jiasongs/JSNestedScroll", :tag => "#{s.version}" }
-  s.platform              = :ios, "11.0"
+  s.platform              = :ios, "12.0"
   s.swift_versions        = ["4.2", "5.0"]
   s.static_framework      = true
   s.requires_arc          = true
