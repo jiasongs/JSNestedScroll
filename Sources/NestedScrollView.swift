@@ -11,6 +11,8 @@ import JSCoreKit
 @objc(JSNestedScrollView)
 public class NestedScrollView: UIScrollView {
     
+    @objc public static let automaticDimension: CGFloat = -1
+    
     @objc public var headerView: (UIView & NestedScrollViewScrollSubview)? {
         didSet {
             oldValue?.removeFromSuperview()
@@ -262,7 +264,7 @@ extension NestedScrollView {
             return 0
         }
         
-        var result = -1.0
+        var result = NestedScrollView.automaticDimension
         if let height = subview.preferredHeight?(in: self) {
             result = height
         }

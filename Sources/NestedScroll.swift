@@ -1,5 +1,5 @@
 //
-//  NestedScrollProtocol.swift
+//  NestedScroll.swift
 //  JSNestedScroll
 //
 //  Created by jiasong on 2022/6/1.
