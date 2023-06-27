@@ -5,18 +5,32 @@
 //  Created by jiasong on 2022/6/1.
 //
 
-@objc(JSNestedScrollViewSupplementarySubview)
-public protocol NestedScrollViewSupplementarySubview {
+import UIKit
+
+public protocol NestedScrollViewSupplementarySubview: UIView {
     
-    @objc(preferredHeightInNestedScrollView:)
-    optional func preferredHeight(in nestedScrollView: NestedScrollView) -> CGFloat
+    func preferredHeight(in nestedScrollView: NestedScrollView) -> CGFloat
     
 }
 
-@objc(JSNestedScrollViewScrollSubview)
 public protocol NestedScrollViewScrollSubview: NestedScrollViewSupplementarySubview {
     
-    @objc(preferredScrollViewInNestedScrollView:)
-    optional func preferredScrollView(in nestedScrollView: NestedScrollView) -> UIScrollView?
+    func preferredScrollView(in nestedScrollView: NestedScrollView) -> UIScrollView?
+    
+}
+
+extension NestedScrollViewSupplementarySubview {
+    
+    public func preferredHeight(in nestedScrollView: NestedScrollView) -> CGFloat {
+        return NestedScrollView.automaticDimension
+    }
+    
+}
+
+extension NestedScrollViewScrollSubview where Self: UIScrollView {
+    
+    public func preferredScrollView(in nestedScrollView: NestedScrollView) -> UIScrollView? {
+        return self
+    }
     
 }
