@@ -148,6 +148,7 @@ public class NestedScrollView: UIScrollView {
         let isContentSizeChanged = self.updateContentSize()
         if isContentSizeChanged || self.isNeedsHandleScolling {
             self.isNeedsHandleScolling = false
+            
             self.handleDidScoll()
         }
     }
@@ -208,7 +209,7 @@ extension NestedScrollView {
     public var contentViewMinimumPosition: CGPoint {
         return CGPoint(
             x: self.js_minimumContentOffset.x,
-            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.qmui_height ?? 0) + self.contentInset.top - self.floatingOffset
+            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.qmui_height ?? 0) + self.adjustedContentInset.top - self.floatingOffset
         )
     }
     
