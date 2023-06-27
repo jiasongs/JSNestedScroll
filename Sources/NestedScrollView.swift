@@ -179,6 +179,7 @@ extension NestedScrollView {
         var contentOffset = self.contentViewMinimumPosition
         contentOffset.x += offset.x
         contentOffset.y += offset.y
+        contentOffset.y -= (self.floatingView?.js_height ?? 0)
         self.js_scrollTo(contentOffset, animated: animated)
     }
     
