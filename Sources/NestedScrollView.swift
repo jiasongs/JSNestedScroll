@@ -179,7 +179,6 @@ extension NestedScrollView {
         var contentOffset = self.contentViewMinimumPosition
         contentOffset.x += offset.x
         contentOffset.y += offset.y
-        contentOffset.y -= (self.floatingView?.js_height ?? 0)
         self.js_scrollTo(contentOffset, animated: animated)
     }
     
@@ -209,7 +208,7 @@ extension NestedScrollView {
     public var contentViewMinimumPosition: CGPoint {
         return CGPoint(
             x: self.js_minimumContentOffset.x,
-            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.js_height ?? 0) + (self.floatingView?.js_height ?? 0)
+            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.qmui_height ?? 0) + self.contentInset.top - self.floatingOffset
         )
     }
     
