@@ -78,11 +78,12 @@ internal class NestedScrollListener {
     weak var bindingScrollView: UIScrollView?
     weak var nestedScrollView: NestedScrollView?
     
+    var didScrollHandler: NestedScrollDidScrollHandler?
+    
     lazy var isAlreadyMonitor: Bool = false
     lazy var isUpdatingContentOffset: Bool = false
     lazy var isAdjustingContentOffset: Bool = false
     lazy var isLayoutingSubviews: Bool = false
-    var didScrollHandler: NestedScrollDidScrollHandler?
     
     private var observations: [NSKeyValueObservation] = []
     
