@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 public protocol NestedScrollViewSupplementarySubview: UIView {
     
@@ -31,6 +32,14 @@ extension NestedScrollViewScrollSubview where Self: UIScrollView {
     
     public func preferredScrollView(in nestedScrollView: NestedScrollView) -> UIScrollView? {
         return self
+    }
+    
+}
+
+extension NestedScrollViewScrollSubview where Self: WKWebView {
+    
+    public func preferredScrollView(in nestedScrollView: NestedScrollView) -> UIScrollView? {
+        return self.scrollView
     }
     
 }

@@ -11,13 +11,13 @@
 
 @implementation _JSNestedScrollModifier
 
-+ (void)hookScrollView:(__kindof UIScrollView *)scrollView
-        layoutSubviews:(void(^)(UIScrollView *scrollView, BOOL isExecuted))layoutSubviews
-   willMoveToSuperview:(void(^)(UIScrollView *scrollView, UIView * _Nullable newSuperview))willMoveToSuperview
-             didScroll:(void(^)(UIScrollView *scrollView))didScroll
-  adjustedContentInset:(void(^)(UIScrollView *scrollView))adjustedContentInset
-   adjustContentOffset:(void(^)(UIScrollView *scrollView, BOOL isExecuted))adjustContentOffset
-      setContentOffset:(void(^)(UIScrollView *scrollView, CGPoint offset, BOOL animated))setContentOffset {
++ (void)onceHookScrollView:(__kindof UIScrollView *)scrollView
+            layoutSubviews:(void(^)(UIScrollView *scrollView, BOOL isExecuted))layoutSubviews
+       willMoveToSuperview:(void(^)(UIScrollView *scrollView, UIView * _Nullable newSuperview))willMoveToSuperview
+                 didScroll:(void(^)(UIScrollView *scrollView))didScroll
+      adjustedContentInset:(void(^)(UIScrollView *scrollView))adjustedContentInset
+       adjustContentOffset:(void(^)(UIScrollView *scrollView, BOOL isExecuted))adjustContentOffset
+          setContentOffset:(void(^)(UIScrollView *scrollView, CGPoint offset, BOOL animated))setContentOffset {
     Class class = scrollView.class;
     [JSCoreHelper executeOnceWithIdentifier:[NSString stringWithFormat:@"_JSNestedScrollModifier %@", NSStringFromClass(class)]
                                  usingBlock:^{

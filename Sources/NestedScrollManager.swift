@@ -36,7 +36,7 @@ internal class NestedScrollManager {
             scrollListener.removeListener()
         }
         
-        _JSNestedScrollModifier.hook(scrollView, layoutSubviews: { (scrollView, isExecuted) in
+        _JSNestedScrollModifier.onceHook(scrollView, layoutSubviews: { (scrollView, isExecuted) in
             scrollView.js_nestedScrollListener?.isLayoutingSubviews = !isExecuted
         }, willMoveToSuperview: { (scrollView, newSuperview) in
             if newSuperview != nil {

@@ -209,7 +209,7 @@ extension NestedScrollView {
     public var contentViewMinimumPosition: CGPoint {
         return CGPoint(
             x: self.js_minimumContentOffset.x,
-            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.qmui_height ?? 0) + self.adjustedContentInset.top - self.floatingOffset
+            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.js_height ?? 0) + self.adjustedContentInset.top - self.floatingOffset
         )
     }
     
