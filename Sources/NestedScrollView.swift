@@ -539,6 +539,10 @@ extension NestedScrollView: UIGestureRecognizerDelegate {
         guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer, let otherGestureRecognizer = otherGestureRecognizer as? UIPanGestureRecognizer else {
             return false
         }
+        let sheetName = "_UISheet" + "Interaction" + "Background" + "DismissRecognizer"
+        guard gestureRecognizer.name != sheetName && otherGestureRecognizer.name != sheetName else {
+            return false
+        }
         
         let velocity = gestureRecognizer.velocity(in: gestureRecognizer.view)
         let otherVelocity = otherGestureRecognizer.velocity(in: otherGestureRecognizer.view)
