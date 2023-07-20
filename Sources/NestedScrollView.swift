@@ -271,7 +271,11 @@ extension NestedScrollView {
         var result = subview.preferredHeight(in: self)
         if result < 0 {
             if let scrollSubview = subview as? NestedScrollViewScrollSubview, let scrollView = scrollSubview.preferredScrollView(in: self) {
-                result = scrollView.contentSize.height + JSUIEdgeInsetsGetVerticalValue(scrollView.adjustedContentInset)
+                if scrollView.contentSize.height > 0 {
+                    result = scrollView.contentSize.height + JSUIEdgeInsetsGetVerticalValue(scrollView.adjustedContentInset)
+                } else {
+                    result = 0
+                }
             } else {
                 result = subview.sizeThatFits(self.js_size).height
                 result = result > 0 ? result : subview.js_height
