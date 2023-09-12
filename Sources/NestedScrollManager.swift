@@ -60,7 +60,7 @@ internal class NestedScrollManager {
 extension UIScrollView {
     
     struct AssociatedKeys {
-        static var scrollListener = "js_nestedScrollListener"
+        static var scrollListener = true
     }
     
     internal var js_nestedScrollListener: NestedScrollListener? {
