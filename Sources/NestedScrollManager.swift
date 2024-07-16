@@ -9,7 +9,7 @@ import UIKit
 
 typealias NestedScrollDidScrollHandler = (UIScrollView) -> Void
 
-internal class NestedScrollManager {
+internal final class NestedScrollManager {
     
     static func handleScrollView(
         _ scrollView: UIScrollView,
@@ -59,7 +59,7 @@ internal class NestedScrollManager {
 
 extension UIScrollView {
     
-    struct AssociatedKeys {
+    private struct AssociatedKeys {
         static var scrollListener: UInt8 = 0
     }
     
@@ -74,7 +74,7 @@ extension UIScrollView {
     
 }
 
-internal class NestedScrollListener {
+internal final class NestedScrollListener {
     weak var bindingScrollView: UIScrollView?
     weak var nestedScrollView: NestedScrollView?
     
@@ -86,6 +86,14 @@ internal class NestedScrollListener {
     lazy var isLayoutingSubviews: Bool = false
     
     private var observations: [NSKeyValueObservation] = []
+    
+    fileprivate init() {
+        
+    }
+    
+    deinit {
+        self.removeListener()
+    }
     
     func addListener() {
         guard let bindingScrollView = self.bindingScrollView else {
@@ -118,9 +126,6 @@ internal class NestedScrollListener {
     }
     
     func removeListener() {
-        guard self.bindingScrollView != nil else {
-            return
-        }
         guard self.isAlreadyMonitor else {
             return
         }
