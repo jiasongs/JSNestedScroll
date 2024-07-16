@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = "JSNestedScroll"
-  s.version               = "0.0.1"
+  s.version               = "0.0.2"
   s.summary               = "嵌套滚动组件"
   s.homepage              = "https://github.com/jiasongs/JSNestedScroll"
   s.license               = "MIT"
