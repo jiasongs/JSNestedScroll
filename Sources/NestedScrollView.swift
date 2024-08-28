@@ -137,8 +137,8 @@ public final class NestedScrollView: UIScrollView {
         let bounds = CGRect(
             x: 0.0,
             y: 0.0,
-            width: self.js_width - JSUIEdgeInsetsGetHorizontalValue(self.adjustedContentInset),
-            height: self.js_height
+            width: self.bounds.width - JSUIEdgeInsetsGetHorizontalValue(self.adjustedContentInset),
+            height: self.bounds.height
         )
         
         let headerHeight = {
@@ -233,7 +233,7 @@ extension NestedScrollView {
     public var contentViewMinimumPosition: CGPoint {
         return CGPoint(
             x: self.js_minimumContentOffset.x,
-            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.js_height ?? 0) + self.adjustedContentInset.top - self.floatingOffset
+            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.bounds.height ?? 0) + self.adjustedContentInset.top - self.floatingOffset
         )
     }
     
@@ -249,7 +249,7 @@ extension NestedScrollView {
     }
     
     private var headerViewContentHeight: CGFloat {
-        let headerHeight = self.headerView?.js_height ?? 0
+        let headerHeight = self.headerView?.bounds.height ?? 0
         var headerContentHeight = 0.0
         if let headerScrollView = self.headerScrollView {
             headerContentHeight = headerScrollView.contentSize.height
@@ -270,7 +270,7 @@ extension NestedScrollView {
     }
     
     private var contentViewContentHeight: CGFloat {
-        let contentViewHeight = self.contentView?.js_height ?? 0
+        let contentViewHeight = self.contentView?.bounds.height ?? 0
         var contentViewContentHeight = 0.0
         if let contentScrollView = self.contentScrollView {
             contentViewContentHeight = contentScrollView.contentSize.height
@@ -297,8 +297,8 @@ extension NestedScrollView {
                     result = 0
                 }
             } else {
-                result = subview.sizeThatFits(self.js_size).height
-                result = result > 0 ? result : subview.js_height
+                result = subview.sizeThatFits(self.bounds.size).height
+                result = result > 0 ? result : subview.bounds.height
             }
         }
         return max(result, 0)
@@ -357,10 +357,10 @@ extension NestedScrollView {
     private func updateContentSize() -> Bool {
         let headerContentHeight = self.headerViewContentHeight
         let contentViewContentHeight = self.contentViewContentHeight
-        let middleHeight = self.middleView?.js_height ?? 0
-        let floatingHeight = self.floatingView?.js_height ?? 0
+        let middleHeight = self.middleView?.bounds.height ?? 0
+        let floatingHeight = self.floatingView?.bounds.height ?? 0
         
-        let contentSize = CGSize(width: self.js_width, height: headerContentHeight + middleHeight + floatingHeight + contentViewContentHeight)
+        let contentSize = CGSize(width: self.bounds.width, height: headerContentHeight + middleHeight + floatingHeight + contentViewContentHeight)
         if self.contentSize != contentSize {
             self.isUpdatingContentSize = true
             self.contentSize = contentSize
@@ -373,37 +373,36 @@ extension NestedScrollView {
     
     private func handleDidScoll() {
         let containerView = self.containerView
-        let headerHeight = self.headerView?.js_height ?? 0
-        let middleHeight = self.middleView?.js_height ?? 0
-        let floatingHeight = self.floatingView?.js_height ?? 0
-        let contentHeight = self.contentView?.js_height ?? 0
-        let contentLessThanScreen = contentHeight < self.js_height
-        let contentOffsetY = self.contentOffset.y
+   
+        let headerHeight = self.headerView?.bounds.height ?? 0
+        let headerViewContentHeight = self.headerScrollView != nil ? self.headerViewContentHeight : headerHeight
+        let headerLessThanScreen = headerViewContentHeight < self.bounds.height
         
-        var prefixContentHeight = 0.0
-        if let headerScrollView = self.headerScrollView {
-            let headerViewContentHeight = self.headerViewContentHeight
-            
-            prefixContentHeight = headerViewContentHeight + middleHeight + floatingHeight
-            
-            let maximumOffsetY = headerViewContentHeight - headerHeight
-            if contentOffsetY <= maximumOffsetY {
-                let headerLessThanScreen = headerViewContentHeight < self.js_height
-                
-                /// container
-                if contentOffsetY <= self.js_minimumContentOffset.y {
-                    if headerLessThanScreen {
-                        self.updateView(containerView, translationY: 0)
-                    } else {
-                        self.updateView(containerView, translationY: contentOffsetY - self.js_minimumContentOffset.y)
-                    }
-                } else if contentOffsetY > self.js_minimumContentOffset.y && contentOffsetY <= 0 {
+        let contentHeight = self.contentView?.bounds.height ?? 0
+        let contentLessThanScreen = contentHeight < self.bounds.height
+        
+        let middleHeight = self.middleView?.bounds.height ?? 0
+        let floatingHeight = self.floatingView?.bounds.height ?? 0
+        
+        let prefixContentHeight = headerViewContentHeight + middleHeight + floatingHeight
+        let maximumOffsetY = headerViewContentHeight - headerHeight
+        let contentOffsetY = self.contentOffset.y
+        if contentOffsetY <= maximumOffsetY {
+            /// container
+            if contentOffsetY <= self.js_minimumContentOffset.y {
+                if headerLessThanScreen {
                     self.updateView(containerView, translationY: 0)
                 } else {
-                    self.updateView(containerView, translationY: contentOffsetY)
+                    self.updateView(containerView, translationY: contentOffsetY - self.js_minimumContentOffset.y)
                 }
-                
-                /// header
+            } else if contentOffsetY > self.js_minimumContentOffset.y && contentOffsetY <= 0 {
+                self.updateView(containerView, translationY: 0)
+            } else {
+                self.updateView(containerView, translationY: contentOffsetY)
+            }
+            
+            /// header
+            if let headerScrollView = self.headerScrollView {
                 var headerMinimumContentOffset = headerScrollView.js_minimumContentOffset
                 if contentOffsetY <= self.js_minimumContentOffset.y {
                     if headerLessThanScreen {
@@ -419,71 +418,21 @@ extension NestedScrollView {
                     headerMinimumContentOffset.y += contentOffsetY
                     self.updateScrollView(headerScrollView, contentOffset: headerMinimumContentOffset)
                 }
-                
-                /// content
-                if let contentScrollView = self.contentScrollView {
-                    self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_minimumContentOffset)
-                }
-            } else {
-                if contentOffsetY <= prefixContentHeight || contentLessThanScreen {
-                    /// container
-                    self.updateView(containerView, translationY: maximumOffsetY)
-                    
-                    /// header
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
-                    
-                    /// content
-                    if let contentScrollView = self.contentScrollView {
-                        self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_minimumContentOffset)
-                    }
-                } else if contentOffsetY < self.js_maximumContentOffset.y - self.adjustedContentInset.bottom {
-                    /// container
-                    self.updateView(containerView, translationY: maximumOffsetY + (contentOffsetY - prefixContentHeight))
-                    
-                    /// header
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
-                    
-                    /// content
-                    if let contentScrollView = self.contentScrollView {
-                        var contentScrollOffset = contentScrollView.js_minimumContentOffset
-                        contentScrollOffset.y += contentOffsetY
-                        contentScrollOffset.y -= prefixContentHeight
-                        self.updateScrollView(contentScrollView, contentOffset: contentScrollOffset)
-                    }
-                } else if contentOffsetY < self.js_maximumContentOffset.y {
-                    /// container
-                    self.updateView(containerView, translationY: maximumOffsetY + self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
-                    
-                    /// header
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
-                    
-                    /// content
-                    if let contentScrollView = self.contentScrollView {
-                        self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
-                    }
-                } else {
-                    /// container
-                    self.updateView(containerView, translationY: maximumOffsetY + contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
-                    
-                    /// header
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
-                    
-                    /// content
-                    if let contentScrollView = self.contentScrollView {
-                        var contentScrollOffset = contentScrollView.js_minimumContentOffset
-                        contentScrollOffset.y += contentOffsetY
-                        contentScrollOffset.y -= prefixContentHeight
-                        contentScrollOffset.y -= self.adjustedContentInset.bottom
-                        self.updateScrollView(contentScrollView, contentOffset: contentScrollOffset)
-                    }
-                }
+            }
+           
+            /// content
+            if let contentScrollView = self.contentScrollView {
+                self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_minimumContentOffset)
             }
         } else {
-            prefixContentHeight = headerHeight + middleHeight + floatingHeight
-            
             if contentOffsetY <= prefixContentHeight || contentLessThanScreen {
                 /// container
-                self.updateView(containerView, translationY: 0)
+                self.updateView(containerView, translationY: maximumOffsetY)
+                
+                /// header
+                if let headerScrollView = self.headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                            }
                 
                 /// content
                 if let contentScrollView = self.contentScrollView {
@@ -491,8 +440,13 @@ extension NestedScrollView {
                 }
             } else if contentOffsetY < self.js_maximumContentOffset.y - self.adjustedContentInset.bottom {
                 /// container
-                self.updateView(containerView, translationY: contentOffsetY - prefixContentHeight)
+                self.updateView(containerView, translationY: maximumOffsetY + (contentOffsetY - prefixContentHeight))
                 
+                /// header
+                if let headerScrollView = self.headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                }
+               
                 /// content
                 if let contentScrollView = self.contentScrollView {
                     var contentScrollOffset = contentScrollView.js_minimumContentOffset
@@ -502,15 +456,29 @@ extension NestedScrollView {
                 }
             } else if contentOffsetY < self.js_maximumContentOffset.y {
                 /// container
-                self.updateView(containerView, translationY: self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
+                self.updateView(containerView, translationY: maximumOffsetY + self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
                 
+                /// header
+                if let headerScrollView = self.headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                }
+               
                 /// content
                 if let contentScrollView = self.contentScrollView {
                     self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
                 }
             } else {
                 /// container
-                self.updateView(containerView, translationY: contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
+                if self.headerScrollView != nil || self.contentScrollView != nil {
+                    self.updateView(containerView, translationY: maximumOffsetY + contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
+                } else {
+                    self.updateView(containerView, translationY: 0)
+                }
+               
+                /// header
+                if let headerScrollView = self.headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                }
                 
                 /// content
                 if let contentScrollView = self.contentScrollView {
@@ -575,7 +543,7 @@ extension NestedScrollView: UIGestureRecognizerDelegate {
         /// 两者的手势均为「垂直|」滑动
         let isVerticalScroll = abs(velocity.x) <= abs(velocity.y) && abs(otherVelocity.x) <= abs(otherVelocity.y)
         /// otherScrollView也是可以「垂直|」滑动的
-        let canVerticalScrollForOther = (otherScrollView == nil || otherScrollView!.contentSize.width <= otherScrollView!.js_width)
+        let canVerticalScrollForOther = (otherScrollView == nil || otherScrollView!.contentSize.width <= otherScrollView!.bounds.width)
         /// 综合判断下
         if isVerticalScroll && canVerticalScrollForOther {
             result = true
