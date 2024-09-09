@@ -373,7 +373,7 @@ extension NestedScrollView {
     
     private func handleDidScoll() {
         let containerView = self.containerView
-   
+        
         let headerHeight = self.headerView?.bounds.height ?? 0
         let headerViewContentHeight = self.headerScrollView != nil ? self.headerViewContentHeight : headerHeight
         let headerLessThanScreen = headerViewContentHeight < self.bounds.height
@@ -419,7 +419,7 @@ extension NestedScrollView {
                     self.updateScrollView(headerScrollView, contentOffset: headerMinimumContentOffset)
                 }
             }
-           
+            
             /// content
             if let contentScrollView = self.contentScrollView {
                 self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_minimumContentOffset)
@@ -432,7 +432,7 @@ extension NestedScrollView {
                 /// header
                 if let headerScrollView = self.headerScrollView {
                     self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
-                            }
+                }
                 
                 /// content
                 if let contentScrollView = self.contentScrollView {
@@ -446,7 +446,7 @@ extension NestedScrollView {
                 if let headerScrollView = self.headerScrollView {
                     self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
                 }
-               
+                
                 /// content
                 if let contentScrollView = self.contentScrollView {
                     var contentScrollOffset = contentScrollView.js_minimumContentOffset
@@ -462,7 +462,7 @@ extension NestedScrollView {
                 if let headerScrollView = self.headerScrollView {
                     self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
                 }
-               
+                
                 /// content
                 if let contentScrollView = self.contentScrollView {
                     self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
@@ -474,7 +474,7 @@ extension NestedScrollView {
                 } else {
                     self.updateView(containerView, translationY: 0)
                 }
-               
+                
                 /// header
                 if let headerScrollView = self.headerScrollView {
                     self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
@@ -531,24 +531,40 @@ extension NestedScrollView: UIGestureRecognizerDelegate {
         guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer, let otherGestureRecognizer = otherGestureRecognizer as? UIPanGestureRecognizer else {
             return false
         }
-        let sheetName = "_UISheet" + "Interaction" + "Background" + "DismissRecognizer"
-        guard gestureRecognizer.name != sheetName && otherGestureRecognizer.name != sheetName else {
+        let uiSheetName = "_UISheet" + "Interaction" + "Background" + "DismissRecognizer"
+        guard gestureRecognizer.name != uiSheetName && otherGestureRecognizer.name != uiSheetName else {
             return false
         }
-        
-        let velocity = gestureRecognizer.velocity(in: gestureRecognizer.view)
-        let otherVelocity = otherGestureRecognizer.velocity(in: otherGestureRecognizer.view)
-        let otherScrollView = otherGestureRecognizer.view as? UIScrollView
-        var result = false
         /// 两者的手势均为「垂直|」滑动
-        let isVerticalScroll = abs(velocity.x) <= abs(velocity.y) && abs(otherVelocity.x) <= abs(otherVelocity.y)
-        /// otherScrollView也是可以「垂直|」滑动的
-        let canVerticalScrollForOther = (otherScrollView == nil || otherScrollView!.contentSize.width <= otherScrollView!.bounds.width)
+        let isVerticalScroll = {
+            let velocity = gestureRecognizer.velocity(in: gestureRecognizer.view)
+            let otherVelocity = otherGestureRecognizer.velocity(in: otherGestureRecognizer.view)
+            return abs(velocity.x) <= abs(velocity.y) && abs(otherVelocity.x) <= abs(otherVelocity.y)
+        }()
+        /// otherGestureRecognizer也是可以「垂直|」滑动的
+        let canVerticalScrollForOther = {
+            guard let otherScrollView = otherGestureRecognizer.view as? UIScrollView else {
+                return false
+            }
+            guard otherScrollView.isScrollEnabled else {
+                return false
+            }
+            if let collectionView = otherScrollView as? UICollectionView, let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                return flowLayout.scrollDirection == .vertical
+            } else if otherScrollView is UITableView {
+                return true
+            } else if otherScrollView.alwaysBounceVertical && !otherScrollView.alwaysBounceHorizontal {
+                return true
+            } else {
+                return otherScrollView.contentSize.width <= otherScrollView.bounds.width
+            }
+        }()
         /// 综合判断下
         if isVerticalScroll && canVerticalScrollForOther {
-            result = true
+            return true
+        } else {
+            return false
         }
-        return result
     }
     
 }
@@ -561,6 +577,34 @@ extension NestedScrollView: UIScrollViewDelegate {
         }
         
         self.delegateProxy.scrollViewDelegateTarget?.scrollViewDidScroll?(scrollView)
+    }
+    
+}
+
+extension NestedScrollView {
+    
+    public override func accessibilityScroll(_ direction: UIAccessibilityScrollDirection) -> Bool {
+        guard !super.accessibilityScroll(direction) else {
+            return true
+        }
+        
+        let contentOffset = { () -> CGPoint? in
+            let offset = self.bounds.height / 1.5
+            switch direction {
+            case .up:
+                return CGPoint(x: self.contentOffset.x, y: self.contentOffset.y - offset)
+            case .down:
+                return CGPoint(x: self.contentOffset.x, y: self.contentOffset.y + offset)
+            default:
+                return nil
+            }
+        }()
+        guard let contentOffset = contentOffset else {
+            return false
+        }
+        self.js_scrollTo(contentOffset, animated: true)
+        UIAccessibility.post(notification: .pageScrolled, argument: nil)
+        return true
     }
     
 }
