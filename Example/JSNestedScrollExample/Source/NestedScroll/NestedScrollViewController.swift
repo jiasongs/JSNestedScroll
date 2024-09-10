@@ -53,28 +53,26 @@ class NestedScrollViewController: QMUICommonViewController {
         self.nestedScrollView.floatingView = self.floatingView
         self.nestedScrollView.contentView = self.contentView
 
-        let refreshHeader = MJRefreshStateHeader { [weak self] in
+        self.nestedScrollView.mj_header = MJRefreshStateHeader { [unowned self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                self?.nestedScrollView.mj_header?.endRefreshing()
+                self.nestedScrollView.mj_header?.endRefreshing()
             })
         }
-        self.nestedScrollView.mj_header = refreshHeader
         
-        let loadMoreFooter = MJRefreshAutoNormalFooter { [weak self] in
+        self.contentView.tableView.mj_footer = MJRefreshAutoNormalFooter { [unowned self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                self?.contentView.numberOfRows += 10
-                self?.contentView.tableView.mj_footer?.endRefreshing()
+                self.contentView.numberOfRows += 10
+                self.contentView.tableView.mj_footer?.endRefreshing()
             })
         }
-        self.contentView.tableView.mj_footer = loadMoreFooter
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.nestedScrollView.frame = self.view.bounds
         self.nestedScrollView.floatingOffset = self.view.safeAreaInsets.top
-        
         self.nestedScrollView.contentInset = UIEdgeInsets(top: self.view.safeAreaInsets.top, left: 0, bottom: self.view.safeAreaInsets.bottom, right: 0)
+        
+        self.nestedScrollView.frame = self.view.bounds
     }
     
     override func setupNavigationItems() {
