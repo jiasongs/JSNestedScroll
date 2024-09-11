@@ -544,7 +544,8 @@ extension NestedScrollView: UIGestureRecognizerDelegate {
         /// otherGestureRecognizer也是可以「垂直|」滑动的
         let canVerticalScrollForOther = {
             guard let otherScrollView = otherGestureRecognizer.view as? UIScrollView else {
-                return false
+                /// 不是UIScrollView时必须返回true，保证手势响应正确
+                return true
             }
             guard otherScrollView.isScrollEnabled else {
                 return false
