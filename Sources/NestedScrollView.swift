@@ -14,67 +14,35 @@ public final class NestedScrollView: UIScrollView {
     
     public var headerView: NestedScrollViewScrollSubview? {
         didSet {
-            if let oldScrollView = oldValue?.preferredScrollView(in: self) {
-                oldScrollView.js_nestedScrollListener = nil
-            }
-            oldValue?.removeFromSuperview()
-            
-            if let headerView = self.headerView {
-                self.containerView.addSubview(headerView)
-            }
-            self.setupSubviews()
-            
-            if let scrollView = self.headerScrollView {
-                NestedScrollManager.handleScrollView(scrollView, in: self, didScrollHandler: self.scrollSubviewDidScrollHandler)
-            }
+            self.addSubview(self.headerView, oldView: oldValue)
         }
     }
     
     public var middleView: NestedScrollViewSupplementarySubview? {
         didSet {
-            oldValue?.removeFromSuperview()
-            
-            if let middleView = self.middleView {
-                self.containerView.addSubview(middleView)
-            }
-            self.setupSubviews()
+            self.addSubview(self.middleView, oldView: oldValue)
         }
     }
     
     public var floatingView: NestedScrollViewSupplementarySubview? {
         didSet {
-            oldValue?.removeFromSuperview()
-            
-            if let floatingView = self.floatingView {
-                self.containerView.addSubview(floatingView)
-            }
-            self.setupSubviews()
+            self.addSubview(self.floatingView, oldView: oldValue)
         }
     }
     
     public var floatingOffset: CGFloat = 0 {
         didSet {
-            if oldValue != self.floatingOffset {
-                self.reload()
+            guard oldValue != self.floatingOffset else {
+                return
             }
+            
+            self.reload()
         }
     }
     
     public var contentView: NestedScrollViewScrollSubview? {
         didSet {
-            if let oldScrollView = oldValue?.preferredScrollView(in: self) {
-                oldScrollView.js_nestedScrollListener = nil
-            }
-            oldValue?.removeFromSuperview()
-            
-            if let contentView = self.contentView {
-                self.containerView.addSubview(contentView)
-            }
-            self.setupSubviews()
-            
-            if let scrollView = self.contentScrollView {
-                NestedScrollManager.handleScrollView(scrollView, in: self, didScrollHandler: self.scrollSubviewDidScrollHandler)
-            }
+            self.addSubview(self.contentView, oldView: oldValue)
         }
     }
     
@@ -304,12 +272,31 @@ extension NestedScrollView {
         return max(result, 0)
     }
     
-    private func setupSubviews() {
-        if let floatingView = self.floatingView {
-            self.containerView.bringSubviewToFront(floatingView)
+    private func addSubview(_ newView: UIView?, oldView: UIView?) {
+        if oldView != newView {
+            oldView?.removeFromSuperview()
+            
+            if let newView = newView {
+                newView.removeFromSuperview()
+                self.containerView.addSubview(newView)
+            }
+            
+            self.setNeedsLayout()
         }
         
-        self.setNeedsLayout()
+        let oldScrollView = (oldView as? NestedScrollViewScrollSubview)?.preferredScrollView(in: self)
+        let newScrollView = (newView as? NestedScrollViewScrollSubview)?.preferredScrollView(in: self)
+        if oldScrollView != newScrollView {
+            oldScrollView?.js_nestedScrollListener = nil
+        }
+        if let newScrollView = newScrollView {
+            NestedScrollManager.handleScrollView(newScrollView, in: self, didScrollHandler: self.scrollSubviewDidScrollHandler)
+        }
+        
+        /// floatingView
+        if let floatingView = self.floatingView, floatingView != self.containerView.subviews.last {
+            self.containerView.bringSubviewToFront(floatingView)
+        }
     }
     
     private func assertScrollView(_ scrollView: UIScrollView) {

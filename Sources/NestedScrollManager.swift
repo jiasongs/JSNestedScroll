@@ -26,7 +26,6 @@ internal final class NestedScrollManager {
         guard scrollListener.nestedScrollView != nestedScrollView else {
             return
         }
-        
         scrollListener.nestedScrollView = nestedScrollView
         scrollListener.didScrollHandler = didScrollHandler
         
@@ -75,15 +74,18 @@ extension UIScrollView {
 }
 
 internal final class NestedScrollListener {
-    weak var bindingScrollView: UIScrollView?
-    weak var nestedScrollView: NestedScrollView?
     
-    var didScrollHandler: NestedScrollDidScrollHandler?
+    fileprivate weak var bindingScrollView: UIScrollView?
     
-    lazy var isAlreadyMonitor: Bool = false
-    lazy var isUpdatingContentOffset: Bool = false
-    lazy var isAdjustingContentOffset: Bool = false
-    lazy var isLayoutingSubviews: Bool = false
+    fileprivate weak var nestedScrollView: NestedScrollView?
+    
+    fileprivate var didScrollHandler: NestedScrollDidScrollHandler?
+    
+    fileprivate lazy var isAlreadyMonitor: Bool = false
+    fileprivate lazy var isAdjustingContentOffset: Bool = false
+    fileprivate lazy var isLayoutingSubviews: Bool = false
+    
+    internal lazy var isUpdatingContentOffset: Bool = false
     
     private var observations: [NSKeyValueObservation] = []
     
@@ -95,7 +97,7 @@ internal final class NestedScrollListener {
         self.removeListener()
     }
     
-    func addListener() {
+    fileprivate func addListener() {
         guard let bindingScrollView = self.bindingScrollView else {
             return
         }
@@ -125,7 +127,7 @@ internal final class NestedScrollListener {
         )
     }
     
-    func removeListener() {
+    fileprivate func removeListener() {
         guard self.isAlreadyMonitor else {
             return
         }
@@ -137,7 +139,7 @@ internal final class NestedScrollListener {
         }
     }
     
-    func callDidScrollHandler() {
+    fileprivate func callDidScrollHandler() {
         guard let bindingScrollView = self.bindingScrollView else {
             return
         }
@@ -148,7 +150,7 @@ internal final class NestedScrollListener {
         self.didScrollHandler?(bindingScrollView)
     }
     
-    func callSetContentOffset(_ offset: CGPoint, animated: Bool) {
+    fileprivate func callSetContentOffset(_ offset: CGPoint, animated: Bool) {
         guard let bindingScrollView = self.bindingScrollView else {
             return
         }
