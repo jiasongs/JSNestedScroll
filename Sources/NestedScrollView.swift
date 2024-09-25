@@ -513,8 +513,8 @@ extension NestedScrollView {
             assert(layout.estimatedItemSize == CGSize.zero, message)
         }
         
-        if JSCGSizeIsValidated(scrollView.bounds.size) {
-            assert(scrollView.bounds.size == scrollView.superview?.bounds.size, "scrollView布局没有充满父视图，会造成滑动异常，请添加contentInst以设置其余的视图")
+        if JSCGSizeIsValidated(scrollView.bounds.size), let superview = scrollView.superview, JSCGSizeIsValidated(superview.bounds.size) && self.isDescendant(of: superview) {
+            assert(scrollView.bounds.size == superview.bounds.size, "scrollView布局没有充满父视图，会造成滑动异常，请添加contentInst以设置其余的视图")
         }
 #endif
     }
