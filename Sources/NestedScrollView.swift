@@ -558,7 +558,13 @@ extension NestedScrollView: UIGestureRecognizerDelegate {
         }()
         /// 综合判断下
         if isVerticalScroll && canVerticalScrollForOther {
-            return true
+            if let scrollView = self.headerScrollView, scrollView == otherGestureRecognizer.view {
+                return true
+            } else if let scrollView = self.contentScrollView, scrollView == otherGestureRecognizer.view {
+                return true
+            } else {
+                return false
+            }
         } else {
             return false
         }
