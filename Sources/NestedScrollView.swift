@@ -299,23 +299,11 @@ extension NestedScrollView {
         }
     }
     
-    private func assertScrollView(_ scrollView: UIScrollView) {
-        let message = "estimated特性会导致contenSize计算不准确, 产生跳动的问题"
-        if let tableView = scrollView as? UITableView {
-            assert(tableView.estimatedRowHeight == 0 && tableView.estimatedSectionHeaderHeight == 0 && tableView.estimatedSectionFooterHeight == 0, message)
-        }
-        if let collectionView = scrollView as? UICollectionView, let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            assert(flowLayout.estimatedItemSize == CGSize.zero, message)
-        }
-    }
-    
     private func updateScrollSettings() {
         if !self.showsVerticalScrollIndicator {
             self.showsVerticalScrollIndicator = true
         }
         if let headerScrollView = self.headerScrollView {
-            self.assertScrollView(headerScrollView)
-            
             if headerScrollView.showsVerticalScrollIndicator {
                 headerScrollView.showsVerticalScrollIndicator = false
             }
@@ -327,8 +315,6 @@ extension NestedScrollView {
             }
         }
         if let contentScrollView = self.contentScrollView {
-            self.assertScrollView(contentScrollView)
-            
             if contentScrollView.showsVerticalScrollIndicator {
                 contentScrollView.showsVerticalScrollIndicator = false
             }
@@ -494,6 +480,13 @@ extension NestedScrollView {
                 self.updateView(floatingView, translationY: finallyFloatingHeight + self.adjustedContentInset.bottom)
             }
         }
+        
+        if let scrollView = self.headerScrollView {
+            self.assertScrollView(scrollView)
+        }
+        if let scrollView = self.contentScrollView {
+            self.assertScrollView(scrollView)
+        }
     }
     
     private func updateScrollView(_ scrollView: UIScrollView, contentOffset: CGPoint) {
@@ -508,6 +501,22 @@ extension NestedScrollView {
         if view.transform.ty != translationY {
             view.transform = CGAffineTransform(translationX: view.transform.tx, y: translationY)
         }
+    }
+    
+    private func assertScrollView(_ scrollView: UIScrollView) {
+#if DEBUG
+        let message = "estimated特性会导致contenSize计算不准确, 产生跳动的问题"
+        if let tableView = scrollView as? UITableView {
+            assert(tableView.estimatedRowHeight == 0 && tableView.estimatedSectionHeaderHeight == 0 && tableView.estimatedSectionFooterHeight == 0, message)
+        }
+        if let collectionView = scrollView as? UICollectionView, let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            assert(layout.estimatedItemSize == CGSize.zero, message)
+        }
+        
+        if JSCGSizeIsValidated(scrollView.bounds.size) {
+            assert(scrollView.bounds.size == scrollView.superview?.bounds.size, "scrollView布局没有充满父视图，会造成滑动异常，请添加contentInst以设置其余的视图")
+        }
+#endif
     }
     
 }
