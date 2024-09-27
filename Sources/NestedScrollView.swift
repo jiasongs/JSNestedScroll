@@ -527,44 +527,19 @@ extension NestedScrollView: UIGestureRecognizerDelegate {
         guard let gestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer, let otherGestureRecognizer = otherGestureRecognizer as? UIPanGestureRecognizer else {
             return false
         }
-        let uiSheetName = "_UISheet" + "Interaction" + "Background" + "DismissRecognizer"
-        guard gestureRecognizer.name != uiSheetName && otherGestureRecognizer.name != uiSheetName else {
-            return false
-        }
         /// 两者的手势均为「垂直|」滑动
         let isVerticalScroll = {
             let velocity = gestureRecognizer.velocity(in: gestureRecognizer.view)
             let otherVelocity = otherGestureRecognizer.velocity(in: otherGestureRecognizer.view)
             return abs(velocity.x) <= abs(velocity.y) && abs(otherVelocity.x) <= abs(otherVelocity.y)
         }()
-        /// otherGestureRecognizer也是可以「垂直|」滑动的
-        let canVerticalScrollForOther = {
-            guard let otherScrollView = otherGestureRecognizer.view as? UIScrollView else {
-                /// 不是UIScrollView时必须返回true，保证手势响应正确
-                return true
-            }
-            guard otherScrollView.isScrollEnabled else {
-                return false
-            }
-            if let collectionView = otherScrollView as? UICollectionView, let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-                return flowLayout.scrollDirection == .vertical
-            } else if otherScrollView is UITableView {
-                return true
-            } else if otherScrollView.alwaysBounceVertical && !otherScrollView.alwaysBounceHorizontal {
-                return true
-            } else {
-                return otherScrollView.contentSize.width <= otherScrollView.bounds.width
-            }
-        }()
-        /// 综合判断下
-        if isVerticalScroll && canVerticalScrollForOther {
-            if let scrollView = self.headerScrollView, scrollView == otherGestureRecognizer.view {
-                return true
-            } else if let scrollView = self.contentScrollView, scrollView == otherGestureRecognizer.view {
-                return true
-            } else {
-                return false
-            }
+        guard isVerticalScroll else {
+            return false
+        }
+        if let scrollView = self.headerScrollView, scrollView == otherGestureRecognizer.view {
+            return true
+        } else if let scrollView = self.contentScrollView, scrollView == otherGestureRecognizer.view {
+            return true
         } else {
             return false
         }
