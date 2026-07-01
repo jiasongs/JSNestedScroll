@@ -5,20 +5,84 @@ disabled_rules:
   - unneeded_synthesized_initializer
 opt_in_rules:
   - let_var_whitespace
+  - empty_count
+  - async_without_await
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - convenience_type
+  - discarded_notification_center_observer
+  - discouraged_assert
+  - discouraged_none_name
+  - discouraged_object_literal
+  - empty_collection_literal
+  - empty_string
+  - enum_case_associated_values_count
+  - expiring_todo
+  - explicit_init
+  - fallthrough
+  - file_name_no_space
+  - first_where
+  - identical_operands
+  - implicitly_unwrapped_optional
+  - last_where
+  - legacy_uigraphics_function
+  - literal_expression_end_indentation
+  - lower_acl_than_parent
+  - multiline_arguments
+  - multiline_parameters_brackets
+  - nimble_operator
+  - non_overridable_class_declaration
+  - nslocalizedstring_key
   - operator_usage_whitespace
+  - optional_enum_case_matching
+  - overridden_super_call
+  - override_in_extension
+  - period_spacing
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
+  - private_action
+  - private_outlet
+  - private_subject
+  - private_swiftui_state
+  - prohibited_super_call
+  - reduce_into
+  - yoda_condition
+  - weak_delegate
+  - vertical_parameter_alignment_on_call
+  - redundant_final
+  - redundant_nil_coalescing
+  - self_binding
+  - sorted_first_last
+  - static_operator
+  - strong_iboutlet
+  - switch_case_on_newline
+  - toggle_bool
+  - unavailable_function
+  - unhandled_throwing_task
+  - unowned_variable_capture
 analyzer_rules:
   - unused_declaration
   - unused_import
+  - capture_variable
+  - explicit_self
+  - typesafe_array_init
 included:
   - ./
   - ../Sources
 excluded:
   - Pods
+  - DerivedData
+  - build
+  - "**/.build/**"
 identifier_name:
   allowed_symbols: "_"
   min_length: 1
+  max_length: 60
 type_name:
   allowed_symbols: "_"
+  max_length: 50
 trailing_whitespace:
   ignores_empty_lines: true
 line_length:
@@ -40,11 +104,16 @@ nesting:
     warning: 3
     error: 3
 function_parameter_count:
-  warning: 5
-  error: 5
+  warning: 6
+  error: 6
 large_tuple:
   warning: 4
   error: 4
 unused_optional_binding:
   severity: error
   ignore_optional_try: true
+type_body_length:
+  warning: 600
+  error: 600
+empty_count:
+  severity: error

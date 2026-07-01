@@ -53,13 +53,15 @@ class NestedScrollViewController: QMUICommonViewController {
         self.nestedScrollView.floatingView = self.floatingView
         self.nestedScrollView.contentView = self.contentView
         
-        self.nestedScrollView.mj_header = MJRefreshStateHeader { [unowned self] in
+        self.nestedScrollView.mj_header = MJRefreshStateHeader { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 self.nestedScrollView.mj_header?.endRefreshing()
             })
         }
         
-        self.contentView.tableView.mj_footer = MJRefreshAutoNormalFooter { [unowned self] in
+        self.contentView.tableView.mj_footer = MJRefreshAutoNormalFooter { [weak self] in
+            guard let self = self else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 self.contentView.numberOfRows += 10
                 self.contentView.tableView.mj_footer?.endRefreshing()

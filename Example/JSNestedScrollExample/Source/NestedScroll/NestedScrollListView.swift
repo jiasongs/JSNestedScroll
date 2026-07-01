@@ -39,6 +39,7 @@ class NestedScrollListView: UIView, QMUITableViewDataSource, QMUITableViewDelega
         self.tableView.delegate = self
     }
     
+    @available(*, unavailable, message: "")
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

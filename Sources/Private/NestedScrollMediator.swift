@@ -73,7 +73,7 @@ extension UIScrollView {
         }
     }
     
-    private struct AssociatedKeys {
+    private enum AssociatedKeys {
         static var scrollListener: UInt8 = 0
     }
     
