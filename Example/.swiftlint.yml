@@ -25,7 +25,6 @@ opt_in_rules:
   - file_name_no_space
   - first_where
   - identical_operands
-  - implicitly_unwrapped_optional
   - last_where
   - legacy_uigraphics_function
   - literal_expression_end_indentation

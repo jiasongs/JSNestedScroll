@@ -10,5 +10,5 @@ target 'JSNestedScrollExample' do
   pod "Then"
   pod "MJRefresh"
   pod 'SwiftLint', :configurations => ['Debug']
-  pod "LookinServer", :subspecs => ['Swift'], :configurations => ["Debug"]
+  pod "LookInsideServer", :git => "https://github.com/LookInsideApp/LookInside-Release.git", :tag => "0.2.7", :configurations => ['Debug']
 end

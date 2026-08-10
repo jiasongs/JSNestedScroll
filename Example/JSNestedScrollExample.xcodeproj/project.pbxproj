@@ -160,6 +160,7 @@
 				7A5CB164291897F5003EEF21 /* Resources */,
 				59FD4F00B6B6AA99C9371702 /* [CP] Copy Pods Resources */,
 				7A2FA1AA2DBF2E71006966BE /* ShellScript */,
+				7E546D557EAC7FE11AB6BFF9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -252,6 +253,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint --strict\n";
+		};
+		7E546D557EAC7FE11AB6BFF9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JSNestedScrollExample/Pods-JSNestedScrollExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E9BB391DDD4BC5A9ED8E88B1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

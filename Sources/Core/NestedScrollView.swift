@@ -70,16 +70,13 @@ open class NestedScrollView: UIScrollView {
         self.didInitialize()
     }
     
-    @available(*, unavailable, message: "use init()")
+    @available(*, unavailable, message: "")
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     open func didInitialize() {
         self.contentInsetAdjustmentBehavior = .never
-        self.alwaysBounceHorizontal = false
-        self.alwaysBounceVertical = true
-        self.bounces = true
         self.contentInset = .zero
         if #available(iOS 26.0, *) {
             self.topEdgeEffect.isHidden = true
@@ -87,6 +84,9 @@ open class NestedScrollView: UIScrollView {
             self.bottomEdgeEffect.isHidden = true
             self.rightEdgeEffect.isHidden = true
         }
+        self.alwaysBounceHorizontal = false
+        self.alwaysBounceVertical = true
+        self.bounces = true
         
         self.addSubview(self.containerView)
         
@@ -106,7 +106,7 @@ open class NestedScrollView: UIScrollView {
             width: self.bounds.width - self.adjustedContentInset.jsc.horizontal,
             height: self.bounds.height
         )
-        if self.isNeedsLayout || self.boundsSize.jsc.estimated() != bounds.size.jsc.estimated() {
+        if self.isNeedsLayout || self.boundsSize != bounds.size {
             self.isNeedsLayout = false
             self.boundsSize = bounds.size
             
@@ -213,58 +213,95 @@ extension NestedScrollView {
         self.setNeedsLayout()
     }
     
-    @objc(scrollToHeaderViewWithOffset:animated:)
-    public func scrollToHeaderView(with offset: CGPoint, animated: Bool) {
-        var contentOffset = self.headerViewMinimumPosition
-        contentOffset.x += offset.x
-        contentOffset.y += offset.y
-        self.js_scroll(toOffset: contentOffset, animated: animated)
+    @objc(scrollToHeaderViewWithAdditionalOffset:animated:)
+    public func scrollToHeaderView(with additionalOffset: CGPoint, animated: Bool) {
+        self.scroll(
+            to: self.headerViewPosition,
+            additionalOffset: additionalOffset,
+            animated: animated
+        )
     }
     
-    @objc(scrollToMiddleViewWithOffset:animated:)
-    public func scrollToMiddleView(with offset: CGPoint, animated: Bool) {
-        var contentOffset = self.middleViewMinimumPosition
-        contentOffset.x += offset.x
-        contentOffset.y += offset.y
-        self.js_scroll(toOffset: contentOffset, animated: animated)
+    @objc(scrollToMiddleViewWithAdditionalOffset:animated:)
+    public func scrollToMiddleView(with additionalOffset: CGPoint, animated: Bool) {
+        self.scroll(
+            to: self.middleViewPosition,
+            additionalOffset: additionalOffset,
+            animated: animated
+        )
     }
     
-    @objc(scrollToContentViewWithOffset:animated:)
-    public func scrollToContentView(with offset: CGPoint, animated: Bool) {
-        var contentOffset = self.contentViewMinimumPosition
-        contentOffset.x += offset.x
-        contentOffset.y += offset.y
-        self.js_scroll(toOffset: contentOffset, animated: animated)
+    @objc(scrollToFloatingViewWithAdditionalOffset:animated:)
+    public func scrollToFloatingView(with additionalOffset: CGPoint, animated: Bool) {
+        self.scroll(
+            to: self.floatingViewPosition,
+            additionalOffset: additionalOffset,
+            animated: animated
+        )
     }
     
-    @objc(scrollToView:withOffset:animated:)
-    public func scrollTo(_ view: UIView, with offset: CGPoint, animated: Bool) {
+    @objc(scrollToFloatingViewOffsetWithAdditionalOffset:animated:)
+    public func scrollToFloatingViewOffset(with additionalOffset: CGPoint, animated: Bool) {
+        self.scroll(
+            to: self.floatingViewOffsetPosition,
+            additionalOffset: additionalOffset,
+            animated: animated
+        )
+    }
+    
+    @objc(scrollToContentViewWithAdditionalOffset:animated:)
+    public func scrollToContentView(with additionalOffset: CGPoint, animated: Bool) {
+        self.scroll(
+            to: self.contentViewPosition,
+            additionalOffset: additionalOffset,
+            animated: animated
+        )
+    }
+    
+    @objc(scrollToView:withAdditionalOffset:animated:)
+    public func scrollTo(_ view: UIView, with additionalOffset: CGPoint, animated: Bool) {
         if view == self.headerView || view == self.headerScrollView {
-            self.scrollToHeaderView(with: offset, animated: animated)
+            self.scrollToHeaderView(with: additionalOffset, animated: animated)
         } else if view == self.middleView {
-            self.scrollToMiddleView(with: offset, animated: animated)
+            self.scrollToMiddleView(with: additionalOffset, animated: animated)
+        } else if view == self.floatingView {
+            self.scrollToFloatingView(with: additionalOffset, animated: animated)
         } else if view == self.contentView || view == self.contentScrollView {
-            self.scrollToContentView(with: offset, animated: animated)
+            self.scrollToContentView(with: additionalOffset, animated: animated)
         } else {
             assertionFailure("不支持此View")
         }
     }
     
-    @objc public var headerViewMinimumPosition: CGPoint {
-        return self.js_minimumContentOffset
+    @objc public var headerViewPosition: CGPoint {
+        return .zero
     }
     
-    @objc public var middleViewMinimumPosition: CGPoint {
+    @objc public var middleViewPosition: CGPoint {
         return CGPoint(
-            x: self.js_minimumContentOffset.x,
-            y: self.js_minimumContentOffset.y + self.headerViewContentHeight
+            x: 0,
+            y: self.headerViewContentHeight
         )
     }
     
-    @objc public var contentViewMinimumPosition: CGPoint {
+    @objc public var floatingViewPosition: CGPoint {
         return CGPoint(
-            x: self.js_minimumContentOffset.x,
-            y: self.js_minimumContentOffset.y + self.headerViewContentHeight + (self.middleView?.bounds.height ?? 0) + self.adjustedContentInset.top - self.floatingOffset
+            x: 0,
+            y: self.middleViewPosition.y + (self.middleView?.bounds.height ?? 0)
+        )
+    }
+    
+    @objc public var floatingViewOffsetPosition: CGPoint {
+        return CGPoint(
+            x: 0,
+            y: self.floatingViewPosition.y - self.floatingOffset
+        )
+    }
+    
+    @objc public var contentViewPosition: CGPoint {
+        return CGPoint(
+            x: 0,
+            y: self.floatingViewPosition.y + (self.floatingView?.bounds.height ?? 0)
         )
     }
     
@@ -396,7 +433,7 @@ extension NestedScrollView {
         let floatingHeight = self.floatingView?.bounds.height ?? 0
         
         let contentSize = CGSize(width: self.bounds.width, height: headerContentHeight + middleHeight + floatingHeight + contentViewContentHeight)
-        guard self.contentSize.jsc.estimated() != contentSize.jsc.estimated() else {
+        guard self.contentSize != contentSize else {
             return false
         }
         self.contentSize = contentSize
@@ -406,55 +443,66 @@ extension NestedScrollView {
     private func handleDidScoll() {
         let containerView = self.containerView
         
+        let headerScrollView = self.headerScrollView
         let headerHeight = self.headerView?.bounds.height ?? 0
-        let headerViewContentHeight = self.headerScrollView != nil ? self.headerViewContentHeight : headerHeight
+        let headerViewContentHeight = headerScrollView != nil ? self.headerViewContentHeight : headerHeight
         let headerLessThanScreen = headerViewContentHeight < self.bounds.height
+        let headerMinimumContentOffset = headerScrollView?.js_minimumContentOffset ?? .zero
+        let headerMaximumContentOffset = headerScrollView?.js_maximumContentOffset ?? .zero
         
+        let contentScrollView = self.contentScrollView
         let contentHeight = self.contentView?.bounds.height ?? 0
         let contentLessThanScreen = contentHeight < self.bounds.height
+        let contentMinimumContentOffset = contentScrollView?.js_minimumContentOffset ?? .zero
+        let contentMaximumContentOffset = contentScrollView?.js_maximumContentOffset ?? .zero
         
         let middleHeight = self.middleView?.bounds.height ?? 0
         let floatingHeight = self.floatingView?.bounds.height ?? 0
         
         let prefixContentHeight = headerViewContentHeight + middleHeight + floatingHeight
         let maximumOffsetY = headerViewContentHeight - headerHeight
+        let minimumContentOffset = self.js_minimumContentOffset
+        let maximumContentOffset = self.js_maximumContentOffset
+        let contentInset = self.adjustedContentInset
+        
         let contentOffsetY = self.contentOffset.y
         if contentOffsetY <= maximumOffsetY {
             /// container
-            if contentOffsetY <= self.js_minimumContentOffset.y {
+            if contentOffsetY <= minimumContentOffset.y {
                 if headerLessThanScreen {
                     self.updateView(containerView, translationY: 0)
                 } else {
-                    self.updateView(containerView, translationY: contentOffsetY - self.js_minimumContentOffset.y)
+                    self.updateView(containerView, translationY: contentOffsetY - minimumContentOffset.y)
                 }
-            } else if contentOffsetY > self.js_minimumContentOffset.y && contentOffsetY <= 0 {
+            } else if contentOffsetY > minimumContentOffset.y && contentOffsetY <= 0 {
                 self.updateView(containerView, translationY: 0)
             } else {
                 self.updateView(containerView, translationY: contentOffsetY)
             }
             
             /// header
-            if let headerScrollView = self.headerScrollView {
-                var headerMinimumContentOffset = headerScrollView.js_minimumContentOffset
-                if contentOffsetY <= self.js_minimumContentOffset.y {
+            if let headerScrollView = headerScrollView {
+                if contentOffsetY <= minimumContentOffset.y {
                     if headerLessThanScreen {
                         self.updateScrollView(headerScrollView, contentOffset: headerMinimumContentOffset)
                     } else {
-                        headerMinimumContentOffset.y += contentOffsetY
-                        headerMinimumContentOffset.y -= self.js_minimumContentOffset.y
-                        self.updateScrollView(headerScrollView, contentOffset: headerMinimumContentOffset)
+                        var headerScrollOffset = headerMinimumContentOffset
+                        headerScrollOffset.y += contentOffsetY
+                        headerScrollOffset.y -= minimumContentOffset.y
+                        self.updateScrollView(headerScrollView, contentOffset: headerScrollOffset)
                     }
-                } else if contentOffsetY > self.js_minimumContentOffset.y && contentOffsetY <= 0 {
+                } else if contentOffsetY > minimumContentOffset.y && contentOffsetY <= 0 {
                     self.updateScrollView(headerScrollView, contentOffset: headerMinimumContentOffset)
                 } else {
-                    headerMinimumContentOffset.y += contentOffsetY
-                    self.updateScrollView(headerScrollView, contentOffset: headerMinimumContentOffset)
+                    var headerScrollOffset = headerMinimumContentOffset
+                    headerScrollOffset.y += contentOffsetY
+                    self.updateScrollView(headerScrollView, contentOffset: headerScrollOffset)
                 }
             }
             
             /// content
-            if let contentScrollView = self.contentScrollView {
-                self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_minimumContentOffset)
+            if let contentScrollView = contentScrollView {
+                self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
             }
         } else {
             if contentOffsetY <= prefixContentHeight || contentLessThanScreen {
@@ -462,62 +510,62 @@ extension NestedScrollView {
                 self.updateView(containerView, translationY: maximumOffsetY)
                 
                 /// header
-                if let headerScrollView = self.headerScrollView {
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                if let headerScrollView = headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerMaximumContentOffset)
                 }
                 
                 /// content
-                if let contentScrollView = self.contentScrollView {
-                    self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_minimumContentOffset)
+                if let contentScrollView = contentScrollView {
+                    self.updateScrollView(contentScrollView, contentOffset: contentMinimumContentOffset)
                 }
-            } else if contentOffsetY < self.js_maximumContentOffset.y - self.adjustedContentInset.bottom {
+            } else if contentOffsetY < maximumContentOffset.y - contentInset.bottom {
                 /// container
                 self.updateView(containerView, translationY: maximumOffsetY + (contentOffsetY - prefixContentHeight))
                 
                 /// header
-                if let headerScrollView = self.headerScrollView {
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                if let headerScrollView = headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerMaximumContentOffset)
                 }
                 
                 /// content
-                if let contentScrollView = self.contentScrollView {
-                    var contentScrollOffset = contentScrollView.js_minimumContentOffset
+                if let contentScrollView = contentScrollView {
+                    var contentScrollOffset = contentMinimumContentOffset
                     contentScrollOffset.y += contentOffsetY
                     contentScrollOffset.y -= prefixContentHeight
                     self.updateScrollView(contentScrollView, contentOffset: contentScrollOffset)
                 }
-            } else if contentOffsetY < self.js_maximumContentOffset.y {
+            } else if contentOffsetY < maximumContentOffset.y {
                 /// container
-                self.updateView(containerView, translationY: maximumOffsetY + self.js_maximumContentOffset.y - prefixContentHeight - self.adjustedContentInset.bottom)
+                self.updateView(containerView, translationY: maximumOffsetY + maximumContentOffset.y - prefixContentHeight - contentInset.bottom)
                 
                 /// header
-                if let headerScrollView = self.headerScrollView {
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                if let headerScrollView = headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerMaximumContentOffset)
                 }
                 
                 /// content
-                if let contentScrollView = self.contentScrollView {
-                    self.updateScrollView(contentScrollView, contentOffset: contentScrollView.js_maximumContentOffset)
+                if let contentScrollView = contentScrollView {
+                    self.updateScrollView(contentScrollView, contentOffset: contentMaximumContentOffset)
                 }
             } else {
                 /// container
-                if self.headerScrollView != nil || self.contentScrollView != nil {
-                    self.updateView(containerView, translationY: maximumOffsetY + contentOffsetY - prefixContentHeight - self.adjustedContentInset.bottom)
+                if headerScrollView != nil || contentScrollView != nil {
+                    self.updateView(containerView, translationY: maximumOffsetY + contentOffsetY - prefixContentHeight - contentInset.bottom)
                 } else {
                     self.updateView(containerView, translationY: 0)
                 }
                 
                 /// header
-                if let headerScrollView = self.headerScrollView {
-                    self.updateScrollView(headerScrollView, contentOffset: headerScrollView.js_maximumContentOffset)
+                if let headerScrollView = headerScrollView {
+                    self.updateScrollView(headerScrollView, contentOffset: headerMaximumContentOffset)
                 }
                 
                 /// content
-                if let contentScrollView = self.contentScrollView {
-                    var contentScrollOffset = contentScrollView.js_minimumContentOffset
+                if let contentScrollView = contentScrollView {
+                    var contentScrollOffset = contentMinimumContentOffset
                     contentScrollOffset.y += contentOffsetY
                     contentScrollOffset.y -= prefixContentHeight
-                    contentScrollOffset.y -= self.adjustedContentInset.bottom
+                    contentScrollOffset.y -= contentInset.bottom
                     self.updateScrollView(contentScrollView, contentOffset: contentScrollOffset)
                 }
             }
@@ -531,19 +579,19 @@ extension NestedScrollView {
                 self.updateView(floatingView, translationY: 0)
             } else if contentOffsetY >= maximumFloatingOffsetY && (contentOffsetY <= prefixContentHeight || contentLessThanScreen) {
                 self.updateView(floatingView, translationY: finallyFloatingHeight + (contentOffsetY - prefixContentHeight))
-            } else if contentOffsetY < self.js_maximumContentOffset.y - self.adjustedContentInset.bottom {
+            } else if contentOffsetY < maximumContentOffset.y - contentInset.bottom {
                 self.updateView(floatingView, translationY: finallyFloatingHeight)
-            } else if contentOffsetY < self.js_maximumContentOffset.y {
-                self.updateView(floatingView, translationY: finallyFloatingHeight + contentOffsetY - self.js_maximumContentOffset.y + self.adjustedContentInset.bottom)
+            } else if contentOffsetY < maximumContentOffset.y {
+                self.updateView(floatingView, translationY: finallyFloatingHeight + contentOffsetY - maximumContentOffset.y + contentInset.bottom)
             } else {
-                self.updateView(floatingView, translationY: finallyFloatingHeight + self.adjustedContentInset.bottom)
+                self.updateView(floatingView, translationY: finallyFloatingHeight + contentInset.bottom)
             }
         }
         
-        if let scrollView = self.headerScrollView {
+        if let scrollView = headerScrollView {
             self.assertScrollView(scrollView)
         }
-        if let scrollView = self.contentScrollView {
+        if let scrollView = contentScrollView {
             self.assertScrollView(scrollView)
         }
     }
@@ -560,7 +608,7 @@ extension NestedScrollView {
             if headerHeight == 0 && middleHeight == 0 {
                 return true
             } else {
-                return self.contentOffset.y >= self.contentViewMinimumPosition.y
+                return self.contentOffset.y >= self.floatingViewOffsetPosition.y
             }
         }()
         guard self.isFloating != isFloating else {
@@ -570,17 +618,26 @@ extension NestedScrollView {
     }
     
     private func updateScrollView(_ scrollView: UIScrollView, contentOffset: CGPoint) {
-        guard scrollView.contentOffset.jsc.estimated() != contentOffset.jsc.estimated() else {
+        guard scrollView.contentOffset != contentOffset else {
             return
         }
         NestedScrollMediator.setContentOffset(contentOffset, for: scrollView)
     }
     
     private func updateView(_ view: UIView, translationY: CGFloat) {
-        guard view.transform.ty.jsc.estimated() != translationY.jsc.estimated() else {
+        guard view.transform.ty != translationY else {
             return
         }
         view.transform = CGAffineTransform(translationX: view.transform.tx, y: translationY)
+    }
+    
+    private func scroll(to position: CGPoint, additionalOffset: CGPoint, animated: Bool) {
+        var contentOffset = CGPoint.zero
+        contentOffset.x += position.x
+        contentOffset.y += position.y
+        contentOffset.x += additionalOffset.x
+        contentOffset.y += additionalOffset.y
+        self.js_scroll(toOffset: contentOffset, animated: animated)
     }
     
     private func assertScrollView(_ scrollView: UIScrollView) {
