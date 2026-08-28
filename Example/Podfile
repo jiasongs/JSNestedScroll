@@ -1,4 +1,4 @@
-platform :ios, "13.0"
+platform :ios, "15.0"
 use_frameworks! :linkage => :static
 install! 'cocoapods', :warn_for_unused_master_specs_repo => false
 
@@ -11,4 +11,16 @@ target 'JSNestedScrollExample' do
   pod "MJRefresh"
   pod 'SwiftLint', :configurations => ['Debug']
   pod "LookInsideServer", :git => "https://github.com/LookInsideApp/LookInside-Release.git", :tag => "0.2.7", :configurations => ['Debug']
+end
+
+def set_deployment_target(target)
+  target.build_configurations.each do |config|
+    config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = "15.0"
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    set_deployment_target(target)
+  end
 end
