@@ -10,9 +10,9 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/CloudlessMoon/JSNestedScroll"
   s.license          = "MIT"
   s.author           = { "ruanmei" => "jiasong@ruanmei.com" }
-  s.source           = { :git => "https://github.com/CloudlessMoon/JSNestedScroll.git", :tag => "#{s.version}" }
+  s.source           = { :git => "https://github.com/CloudlessMoon/JSNestedScroll.git", :tag => s.version.to_s }
 
   s.dependency "JSCoreKit", "~> 2.0"
 
-  s.source_files          = "Sources/**/*.{swift,h,m}"
+  s.source_files     = "Sources/**/*.{swift,h,m}"
 end
